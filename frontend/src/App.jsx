@@ -4,7 +4,7 @@ function App() {
 
   return (
     <>
-      <h2>HRM</h2>
+      <h2>HRM project</h2>
     </>
   )
 }
