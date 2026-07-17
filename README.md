@@ -191,7 +191,7 @@ HRM-Project/
 ### Clone Repository
 
 ```bash
-git clone --branch development https://github.com/your-org/hrm-project.git
+git clone --branch development https://github.com/sivaprasad2848/HRM-Project.git
 ```
 
 ### Navigate to Project
