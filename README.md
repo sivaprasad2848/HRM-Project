@@ -414,7 +414,7 @@ Pipeline Includes:
 
 ## Contributors
 
-Cyber Square Technologies
+Cyber Square 
 
 Software Development Team
 
