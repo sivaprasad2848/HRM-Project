@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
 export default function Dashboard() {
   const [candidate, setCandidate] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const candidateId = localStorage.getItem('candidateId');
@@ -191,17 +193,26 @@ export default function Dashboard() {
           </div>
         </nav>
 
-        <div className="sidebar-footer">
-          <div className="user-profile">
-            <div className="user-avatar-initials">
-              {getInitials(candidate?.full_name || 'User')}
-            </div>
-            <div className="user-info">
-              <div className="user-name">{candidate?.full_name || 'User'}</div>
-              <div className="user-role">{getCourseName(candidate?.course || 'web_development')}</div>
-            </div>
-          </div>
+  <div
+    className="sidebar-footer"
+    onClick={() => navigate("/profile")}
+    style={{ cursor: "pointer" }}>
+    <div className="user-profile">
+      <div className="user-avatar-initials">
+        {getInitials(candidate?.full_name || "User")}
+      </div>
+
+      <div className="user-info">
+        <div className="user-name">
+          {candidate?.full_name || "User"}
         </div>
+
+        <div className="user-role">
+          Profile
+        </div>
+      </div>
+    </div>
+  </div>
       </aside>
 
       {/* Main Content */}

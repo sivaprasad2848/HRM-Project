@@ -4,7 +4,7 @@ import logo from "../assets/cybersqaure.png";
 
 export default function QRDisplay() {
 
-  const registerURL = "http://localhost:5173/register";
+  const registerURL = "http://localhost:5173/register"
 
   return (
     <div className="qr-page">

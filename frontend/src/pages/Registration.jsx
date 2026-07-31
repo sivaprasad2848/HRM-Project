@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./RegistrationQR.css";
+import "./Registration.css";
 import logo from "../assets/cybersqaure.png";
 
 export default function RegistrationQR() {
@@ -10,6 +10,7 @@ export default function RegistrationQR() {
     email: '',
     phone: '',
     course: '',
+    password: "",
   });
   const [cv, setCv] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
@@ -32,49 +33,68 @@ export default function RegistrationQR() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage('');
+  e.preventDefault();
+  setLoading(true);
+  setMessage("");
 
-    const data = new FormData();
-    data.append('full_name', formData.full_name);
-    data.append('email', formData.email);
-    data.append('phone', formData.phone);
-    data.append('course', formData.course);
-    if (cv) data.append('cv', cv);
-    if (profilePhoto) data.append('profile_photo', profilePhoto);
+  const data = new FormData();
+  data.append("full_name", formData.full_name);
+  data.append("email", formData.email);
+  data.append("phone", formData.phone);
+  data.append("course", formData.course);
+  data.append("password", formData.password);
 
-    try {
-      const response = await fetch('http://localhost:8000/api/candidates/register/', {
-        method: 'POST',
+  if (cv) data.append("cv", cv);
+  if (profilePhoto) data.append("profile_photo", profilePhoto);
+
+  try {
+    const response = await fetch(
+      "http://localhost:8000/api/candidates/register/",
+      {
+        method: "POST",
         body: data,
+      }
+    );
+
+    const text = await response.text();
+console.log("Response:", text);
+
+let result = {};
+try {
+  result = JSON.parse(text);
+} catch (e) {
+  console.log("Response is not JSON");
+}
+    if (response.ok) {
+      if (result.candidate_id) {
+        localStorage.setItem("candidateId", result.candidate_id);
+      }
+
+      alert("🎉 Registration Successful!");
+
+      setFormData({
+        full_name: "",
+        email: "",
+        phone: "",
+        course: "",
       });
 
-      const result = await response.json();
+      setCv(null);
+      setProfilePhoto(null);
 
-      if (response.ok) {
-        const candidateId = result.candidate_id;
-        setMessage('Registration successful! Redirecting to dashboard...');
-        setFormData({ full_name: '', email: '', phone: '', course: '' });
-        setCv(null);
-        setProfilePhoto(null);
-        
-        // Store candidate ID in localStorage
-        localStorage.setItem('candidateId', candidateId);
-        
-        // Redirect to dashboard after 2 seconds
-        setTimeout(() => {
-          navigate('/dashboard');
-        }, 2000);
-      } else {
-        setMessage(result.error || 'Registration failed. Please try again.');
-      }
-    } catch (error) {
-      setMessage('Error connecting to server. Please try again.');
-    } finally {
-      setLoading(false);
+      navigate("/dashboard");
+    } else {
+      console.log(result);
+      setMessage(JSON.stringify(result));
     }
-  };
+  } catch (error) {
+    console.error(error);
+    setMessage("Error connecting to server. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+    
 
   return (
     <div className="qr-page">
@@ -123,6 +143,18 @@ export default function RegistrationQR() {
                     required
                   />
                 </div>
+
+                <div className="form-group">
+                <label>PASSWORD *</label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter Password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
 
                 <div className="form-group">
                   <label>EMAIL *</label>
