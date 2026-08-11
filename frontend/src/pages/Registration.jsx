@@ -114,10 +114,6 @@ try {
               <p>Fill in the details below to register</p>
             </div>
           </div>
-          <div className="header-right">
-            <span className="already-text">Already registered?</span>
-            <a href="/login" className="login-btn">Login →</a>
-          </div>
         </div>
 
         {/* Card */}

@@ -11,6 +11,7 @@ class Candidate(models.Model):
     full_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=20)
+    password = models.CharField(max_length=128)
     course = models.CharField(max_length=50, choices=COURSE_CHOICES)
     cv = models.FileField(upload_to='cvs/', blank=True, null=True)
     profile_photo = models.ImageField(upload_to='photos/', blank=True, null=True)

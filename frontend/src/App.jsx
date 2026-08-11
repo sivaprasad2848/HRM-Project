@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import QRDisplay from "./pages/QRDisplay";
 import Registration from "./pages/Registration";
 import Dashboard from "./pages/Dashboard";
@@ -9,11 +10,23 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<QRDisplay />} />
-        <Route path="/register" element={<Registration />} />
-        <Route path="/profile" element={<StudentProfile />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* Login - first page */}
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
+
+        {/* Registration */}
+        <Route path="/register" element={<Registration />} />
+
+        {/* Dashboard */}
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* Profile */}
+        <Route path="/profile" element={<StudentProfile />} />
+
+        {/* QR Display */}
+        <Route path="/qr" element={<QRDisplay />} />
+
       </Routes>
     </BrowserRouter>
   );
